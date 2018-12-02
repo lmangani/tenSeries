@@ -4,7 +4,8 @@
   "description": "lstm metrics",
   "main": "index.js",
   "scripts": {
-    "test": "node test/test"
+    "test": "node test/test",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
