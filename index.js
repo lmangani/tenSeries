@@ -5,9 +5,7 @@ const fetch = require("node-fetch");
 const fs = require("fs");
 const _ = require("lodash");
 const io = require("./io");
-const promCon = process.env.hasOwnProperty("PROMCON")
-  ? process.env["PROMCON"]
-  : "prom.predictatron.net:9090";
+const promCon = process.env.hasOwnProperty("PROMCON") ? process.env["PROMCON"] : "prom.predictatron.net:9090";
 const backSteps = 25;
 const stepDuration = 60;
 const targets = ["btc_usd", "bch_usd", "eth_usd"];
@@ -36,6 +34,7 @@ async function promRange(query, start, end, step) {
     `http://${promCon}/api/v1/query_range?query=${e(query)}&start=${e(start.toISOString())}&end=${e(end.toISOString())}&step=${e(step)}`
   );
   const json = await res.json();
+  // console.log('RESP',json);
   return json;
 }
 
@@ -63,6 +62,7 @@ async function querySeries() {
         normalized: _.map(parsed, x => x * scale.scale + scale.scaleMin),
         scale
       };
+      // console.log('ACC',acc);
       return acc;
     },
     {}
@@ -150,9 +150,10 @@ async function logMetrics() {
 }
 
 exports.lstm = async (req, res) => {
-  res.setHeader("content-type", "text/plain");
-  const target = req.query.target ? req.query.target : "btc_usd";
+  res.header("content-type", "text/plain");
+  var target = req.query.target ? req.query.target : "btc_usd";
   const m = await metrics(target);
+  // console.log(m);
   res.send(m);
 };
 
