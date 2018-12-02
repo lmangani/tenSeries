@@ -17,6 +17,11 @@ PROM=prometheus.server:9090 npm run server
 ```
 npm test
 ```
+
+### TODO
+* model training API
+* additional data query backends
+* save/restore functions
 -------------
 
 ### Status
